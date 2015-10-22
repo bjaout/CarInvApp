@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarInventoryApp
 {
+    [Serializable]
     abstract class MotorVehicle:Vehicle
     {
         public enum DrivetrainType { RearWheel, FrontWheel };
@@ -39,7 +40,7 @@ namespace CarInventoryApp
             set { gearbox = value; }
         }
 
-        public abstract String Start();
-        public abstract String Stop();
+        public abstract string Start();
+        public abstract string Stop();
     }
 }

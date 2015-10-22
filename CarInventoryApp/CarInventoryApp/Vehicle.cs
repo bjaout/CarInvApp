@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarInventoryApp
 {
+    [Serializable]
     abstract class Vehicle
     {
         private int nbWheel;
@@ -15,23 +16,23 @@ namespace CarInventoryApp
             set { nbWheel = value; }
         }
 
-        private String brand;
-        public String Brand
+        private string brand;
+        public string Brand
         {
             get { return brand; }
             set { brand = value; }
         }
 
-        private String model;
-        public String Model
+        private string model;
+        public string Model
         {
             get { return model; }
             set { model = value; }
         }
 
 
-        public abstract String Drive();
-        public abstract String Park();
+        public abstract string Drive();
+        public abstract string Park();
 
     }
 }

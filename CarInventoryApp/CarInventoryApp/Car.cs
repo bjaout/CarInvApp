@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarInventoryApp
 {
+    [Serializable]
     class Car:MotorVehicle
     {
-        public enum TrunkType { Tailgate, Hatch, None}
+        public enum TrunkType { Tailgate = 2, Hatch = 1, None = 0}
 
         private int nbDoors;
         public int NbDoors
@@ -35,34 +36,73 @@ namespace CarInventoryApp
             this.Trunk = TrunkType.Hatch;
         }
 
-        public virtual String OpenTrunk()
+        public Car(string brand, string model, int nbGearRatio, int nbDoors, int horsePower, TrunkType trunk)
         {
-            throw new NotImplementedException();
+            this.Brand = brand;
+            this.Model = model;
+            this.NbGearRatio = nbGearRatio;
+            this.NbDoors = nbDoors;
+            this.HorsePower = horsePower;
+            this.Trunk = trunk;
+            this.NbWheel = 4;
         }
 
-        public virtual String CloseTrunk()
+        public virtual string OpenTrunk()
         {
-            throw new NotImplementedException();
+            return "Ouverture du coffre";
+        }
+
+        public virtual string CloseTrunk()
+        {
+            return "Fermeture du coffre";
         }
 
         public override string Start()
         {
-            throw new NotImplementedException();
+            return "Je démarre";
         }
 
         public override string Stop()
         {
-            throw new NotImplementedException();
+            return "Je m'arrête";
         }
 
         public override string Drive()
         {
-            throw new NotImplementedException();
+            return "Je roule";
+        }
+
+        public string Drive(int speed)
+        {
+            return "Je roule à " + speed + " km/h";
         }
 
         public override string Park()
         {
-            throw new NotImplementedException();
+            return "Je me gare";
+        }
+        public override string ToString()
+        {
+            string textValue;
+            string typeTrunk="inconnu";
+            switch(this.Trunk)
+            {
+                case TrunkType.Hatch:
+                    typeTrunk = "coffre";
+                    break;
+
+                case TrunkType.Tailgate:
+                    typeTrunk = "hayon";
+                    break;
+
+                case TrunkType.None:
+                    typeTrunk = "inconnu";
+                    break;
+            }
+            textValue = "Je suis une voiture de marque " + this.Brand + " de modèle " + this.Model + " avec " + this.NbDoors + " portes.\n";
+            textValue += "Je possède une puissance de " + this.HorsePower + " chevaux, avec " + NbGearRatio + " vitesses.\n";
+            textValue += "Mon coffre est de type " + typeTrunk;
+            return textValue;
         }
     }
 }
