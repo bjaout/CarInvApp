@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CarInventoryApp
 {
     [Serializable]
-    abstract class MotorVehicle:Vehicle
+    abstract class MotorVehicle:Vehicle, IMotorized
     {
         public enum DrivetrainType { RearWheel, FrontWheel };
         public enum GearboxType { Manual, Automatic };

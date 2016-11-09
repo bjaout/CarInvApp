@@ -30,9 +30,11 @@ namespace CarInventoryApp
             int nbGearRatio = 0;
             int nbDoors = 0;
             int horsePower = 0;
+            bool storage = false;
+            bool crutch = false;
             Car.TrunkType trunk = Car.TrunkType.None;
 
-            string dir = @"c:\temp";
+            string dir = Path.GetTempPath();
             file = Path.Combine(dir, "vehicles.bin");
 
             Console.WriteLine("Bonjour. Bienvenu dans l'outil de gestion des stock d'INSA Car");
@@ -42,32 +44,64 @@ namespace CarInventoryApp
             {
                 DisplayMenu();
                 Console.ForegroundColor = ConsoleColor.White;
-                switch (Console.ReadLine())
+                try
                 {
-                    case "0":
-                        PrintList();
-                        break;
+                    switch (Console.ReadLine())
+                    {
+                        case "0":
+                            PrintList();
+                            break;
 
-                    case "1":
-                        GetCarDatas(out brand, out model, out nbGearRatio, out nbDoors, out horsePower, out trunk);
-                        AddVehicle(brand,model,nbGearRatio,nbDoors,horsePower,trunk);
-                        break;
+                        case "1":
+                            if (GetCarDatas(out brand, out model, out nbGearRatio, out nbDoors, out horsePower, out trunk))
+                            {
+                                AddCar(brand, model, nbGearRatio, nbDoors, horsePower, trunk);
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("La voiture n'a pas pu être ajoutée à cause de paramètres corrompus.");
+                            }
+                            break;
 
-                    case "2":
-                        DeleteVehicle();
-                        break;
+                        case "2":
+                            if (GetMotoDatas(out brand, out model, out nbGearRatio, out horsePower, out storage))
+                            {
+                                AddMoto(brand, model, nbGearRatio, horsePower, storage);
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("La moto n'a pas pu être ajoutée à cause de paramètres corrompus.");
+                            }
+                            break;
 
-                    case "3":
-                        ClearList();
-                        break;
+                        case "3":
+                            GetVeloDatas(out brand, out model, out crutch);
+                            AddVelo(brand, model, crutch);
+                            break;
 
-                    case "4":
-                        SaveData();
-                        stop = true;
-                        break;
+                        case "4":
+                            DeleteVehicle();
+                            break;
 
-                    default:
-                        break;
+                        case "5":
+                            ClearList();
+                            break;
+
+                        case "6":
+                            SaveData();
+                            stop = true;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                catch (NotImplementedException)
+                {
+                    Console.WriteLine("Impossible de réaliser cette action car la "
+                        + "fonctionnalité n'est pas implémentée.");
                 }
             }
         }
